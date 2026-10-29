@@ -110,7 +110,7 @@ export const GardenTerminal: React.FC<GardenTerminalProps> = ({ sections, onSect
       </div>
       <div
         ref={scrollRef}
-        className={`${compact ? 'h-64' : 'h-72'} overflow-y-auto p-3 bg-[var(--gdn-bg)]`}
+        className={`${compact ? 'h-56' : 'h-72'} overflow-y-auto p-3 bg-[var(--gdn-bg)]`}
       >
         {lines.map((line, i) => (
           <div
