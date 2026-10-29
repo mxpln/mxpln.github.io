@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link as LinkIcon, Search, Star, FolderOpen, TerminalSquare } from 'lucide-react';
-import { gardenSections, allTags, GardenLink } from './gardenData';
+import { GardenSection, GardenLink } from './gardenData';
+import { GardenTerminal } from '../components/GardenTerminal';
+import { loadSections, subscribe } from './gardenStore';
 
 const LinkCard: React.FC<{ link: GardenLink }> = ({ link }) => (
   <a
@@ -33,10 +35,13 @@ const LinkCard: React.FC<{ link: GardenLink }> = ({ link }) => (
 );
 
 export const Garden: React.FC = () => {
+  const [sections, setSections] = React.useState<GardenSection[]>(loadSections);
   const [query, setQuery] = React.useState('');
   const [activeTag, setActiveTag] = React.useState<string | null>(null);
   const [starredOnly, setStarredOnly] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => subscribe(setSections), []);
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -62,12 +67,14 @@ export const Garden: React.FC = () => {
     );
   };
 
-  const visibleSections = gardenSections
+  const visibleSections = sections
     .map((s) => ({ ...s, links: s.links.filter(matches) }))
     .filter((s) => s.links.length > 0);
 
-  const total = gardenSections.reduce((n, s) => n + s.links.length, 0);
+  const total = sections.reduce((n, s) => n + s.links.length, 0);
   const visibleCount = visibleSections.reduce((n, s) => n + s.links.length, 0);
+
+  const tags = Array.from(new Set(sections.flatMap((s) => s.links.flatMap((l) => l.tags)))).sort();
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8">
@@ -103,7 +110,7 @@ export const Garden: React.FC = () => {
             <Star size={13} className={starredOnly ? 'fill-white' : ''} />
             starred
           </button>
-          {allTags.map((tag) => (
+          {tags.map((tag) => (
             <button
               key={tag}
               onClick={() => setActiveTag(activeTag === tag ? null : tag)}
@@ -125,6 +132,10 @@ export const Garden: React.FC = () => {
           </span>
         </div>
       </header>
+
+      <div className="mb-10">
+        <GardenTerminal sections={sections} onSectionsChange={setSections} />
+      </div>
 
       {visibleSections.length === 0 && (
         <div className="brutal-container p-8 text-center text-[var(--text-secondary)] font-mono">
