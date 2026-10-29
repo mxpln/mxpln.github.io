@@ -29,6 +29,9 @@ export const Home: React.FC = () => {
             <Link to="/contact" className="brutal-button inline-block">
               INITIALIZE CONTACT
             </Link>
+            <Link to="/garden" className="brutal-button inline-block ml-4">
+              OPEN GARDEN →
+            </Link>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {['REACT', 'NODE.JS', 'TYPESCRIPT', 'POSTGRESQL'].map((tech, i) => (

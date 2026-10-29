@@ -8,6 +8,7 @@ import { Laboratory } from './pages/Laboratory';
 import { Stack } from './pages/Stack';
 import { Manifesto } from './pages/Manifesto';
 import { Contact } from './pages/Contact';
+import { Garden } from './pages/Garden';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/garden" element={<Garden />} />
           <Route path="/works" element={<Works />} />
           <Route path="/works/:id" element={<ProjectPage />} />
           <Route path="/lab" element={<Laboratory />} />

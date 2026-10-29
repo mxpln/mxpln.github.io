@@ -164,6 +164,19 @@ body {
   transform-origin: left;
 }
 
+/* Garden link cards */
+.garden-card {
+  background: var(--surface-alt);
+  border: 2px solid var(--border);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+
+.garden-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0 var(--accent);
+  border-color: var(--accent);
+}
+
 /* Status Colors */
 .brutal-success {
   color: var(--success);

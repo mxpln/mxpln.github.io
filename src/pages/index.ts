@@ -6,6 +6,11 @@ export const routes = [
     description: 'Digital brutalism meets modern web development. Experience raw, functional design that makes a statement.'
   },
   {
+    name: 'GARDEN',
+    path: '/garden',
+    description: 'Personal collection of saved links — tools, reading and inspiration, organized by section.'
+  },
+  {
     name: 'WORKS',
     path: '/works',
     description: 'Explore a collection of battle-tested projects showcasing robust architecture and clean functionality.'
