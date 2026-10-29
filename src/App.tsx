@@ -20,10 +20,10 @@ function App() {
 
 const Shell = () => {
   const location = useLocation();
-  const isGarden = location.pathname === '/garden';
+  const isTerminal = location.pathname === '/' || location.pathname === '/garden';
   return (
-    <div className={isGarden ? 'min-h-screen' : 'min-h-screen bg-[var(--concrete)]'}>
-      {!isGarden && (
+    <div className={isTerminal ? 'min-h-screen' : 'min-h-screen bg-[var(--concrete)]'}>
+      {!isTerminal && (
         <>
           <div className="brutal-grid"></div>
           <Navigation />
