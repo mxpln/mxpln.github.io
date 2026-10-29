@@ -1,5 +1,5 @@
 import React from 'react';
-import { TerminalSquare } from 'lucide-react';
+import { TerminalSquare, X } from 'lucide-react';
 import { GardenSection } from '../pages/gardenData';
 import { executeCommand } from '../pages/gardenCli';
 import { saveSections, resetSections } from '../pages/gardenStore';
@@ -12,13 +12,15 @@ interface Line {
 interface GardenTerminalProps {
   sections: GardenSection[];
   onSectionsChange: (sections: GardenSection[]) => void;
+  compact?: boolean;
+  onClose?: () => void;
 }
 
-const PROMPT = 'garden:~$';
+const PROMPT = 'mxpln.github.io:~$';
 
-export const GardenTerminal: React.FC<GardenTerminalProps> = ({ sections, onSectionsChange }) => {
+export const GardenTerminal: React.FC<GardenTerminalProps> = ({ sections, onSectionsChange, compact = false, onClose }) => {
   const [lines, setLines] = React.useState<Line[]>([
-    { kind: 'output', text: 'garden-os v1.0 — type "help" for commands' }
+    { kind: 'output', text: 'garden-os — type "help", "ls" or what you need · Ctrl+` toggles' }
   ]);
   const [input, setInput] = React.useState('');
   const [history, setHistory] = React.useState<string[]>([]);
@@ -29,6 +31,10 @@ export const GardenTerminal: React.FC<GardenTerminalProps> = ({ sections, onSect
   React.useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [lines]);
+
+  React.useEffect(() => {
+    if (!compact) inputRef.current?.focus();
+  }, [compact]);
 
   const run = (raw: string) => {
     const result = executeCommand(raw, sections);
@@ -89,35 +95,39 @@ export const GardenTerminal: React.FC<GardenTerminalProps> = ({ sections, onSect
 
   return (
     <div
-      className="brutal-container p-0 overflow-hidden cursor-text"
+      className="gdn font-mono text-[13px] cursor-text"
       onClick={() => inputRef.current?.focus()}
     >
-      <div className="flex items-center gap-2 px-4 py-2 border-b-2 border-[var(--border)] bg-[var(--surface-alt)]">
-        <TerminalSquare size={14} className="text-[var(--accent)]" />
-        <span className="font-mono text-xs text-[var(--text-secondary)]">
-          garden-os — type <span className="text-[var(--accent)]">help</span>
-        </span>
+      <div className="flex items-center gap-2 px-3 py-1.5 border-b border-[var(--gdn-border)] bg-[var(--gdn-panel)] gdn-dim text-xs">
+        <TerminalSquare size={13} className="text-[var(--gdn-accent)]" />
+        <span>❯_ TERMINAL — garden-os</span>
+        <span className="hidden sm:inline opacity-60">type help, ls or what you need</span>
+        {onClose && (
+          <button onClick={onClose} className="ml-auto hover:text-[var(--gdn-text)]" aria-label="close terminal">
+            <X size={14} />
+          </button>
+        )}
       </div>
       <div
         ref={scrollRef}
-        className="font-mono text-sm p-4 h-72 overflow-y-auto bg-[var(--surface)]"
+        className={`${compact ? 'h-64' : 'h-72'} overflow-y-auto p-3 bg-[var(--gdn-bg)]`}
       >
         {lines.map((line, i) => (
           <div
             key={i}
-            className={line.kind === 'input' ? 'text-[var(--text)] mt-1' : 'text-[var(--text-secondary)] whitespace-pre-wrap'}
+            className={line.kind === 'input' ? 'text-[var(--gdn-text)] mt-1' : 'gdn-dim whitespace-pre-wrap'}
           >
             {line.text}
           </div>
         ))}
-        <div className="flex items-center gap-2 mt-1 font-mono text-sm">
-          <span className="text-[var(--accent)] shrink-0">{PROMPT}</span>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-[var(--gdn-accent)] shrink-0">{PROMPT}</span>
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
-            className="flex-1 bg-transparent outline-none text-[var(--text)] caret-[var(--accent)]"
+            className="flex-1 bg-transparent outline-none text-[var(--gdn-text)] caret-[var(--gdn-accent)]"
             spellCheck={false}
             autoComplete="off"
             aria-label="garden terminal input"

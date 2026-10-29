@@ -177,6 +177,77 @@ body {
   border-color: var(--accent);
 }
 
+/* ---- Garden terminal-OS theme (dark, monospace, jasperbernaers-style) ---- */
+.gdn {
+  --gdn-bg: #0d0f14;
+  --gdn-panel: #14161d;
+  --gdn-border: #262a35;
+  --gdn-text: #e6e6e6;
+  --gdn-accent: #7ee787;
+  background-color: var(--gdn-bg);
+  color: var(--gdn-text);
+}
+
+.gdn-dim {
+  color: #8b949e;
+}
+
+.gdn .gdn-dim::placeholder,
+.gdn input::placeholder {
+  color: #8b949e;
+}
+
+.gdn-tag {
+  border: 1px solid var(--gdn-border);
+  color: #8b949e;
+  padding: 0 6px;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.gdn-kbd {
+  border: 1px solid var(--gdn-border);
+  color: #8b949e;
+  padding: 0 5px;
+  font-size: 10px;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.gdn-tree {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  padding: 3px 8px;
+  color: #8b949e;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+
+.gdn-tree:hover {
+  color: var(--gdn-text);
+  background: var(--gdn-panel);
+}
+
+.gdn-tree-active {
+  color: var(--gdn-accent);
+  background: var(--gdn-panel);
+  border-left-color: var(--gdn-accent);
+}
+
+.gdn-row:hover {
+  background: var(--gdn-panel);
+}
+
+/* keep the rest of the site on its light brutalist theme */
+.gdn ::selection {
+  background: var(--gdn-accent);
+  color: var(--gdn-bg);
+}
+
 /* Status Colors */
 .brutal-success {
   color: var(--success);
