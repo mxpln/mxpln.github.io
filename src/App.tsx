@@ -3,7 +3,6 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Works } from './pages/Works';
 import { Project } from './pages/Project';
-import { Home } from './pages/Home';
 import { Laboratory } from './pages/Laboratory';
 import { Stack } from './pages/Stack';
 import { Manifesto } from './pages/Manifesto';
@@ -21,6 +20,7 @@ function App() {
 const Shell = () => {
   const location = useLocation();
   const isTerminal = location.pathname === '/' || location.pathname === '/garden';
+
   return (
     <div className={isTerminal ? 'min-h-screen' : 'min-h-screen bg-[var(--concrete)]'}>
       {!isTerminal && (
@@ -30,7 +30,7 @@ const Shell = () => {
         </>
       )}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Garden />} />
         <Route path="/garden" element={<Garden />} />
         <Route path="/works" element={<Works />} />
         <Route path="/works/:id" element={<ProjectPage />} />
