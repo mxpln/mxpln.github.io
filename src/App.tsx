@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Works } from './pages/Works';
 import { Project } from './pages/Project';
