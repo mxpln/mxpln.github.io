@@ -238,6 +238,11 @@ body {
   border-left-color: var(--gdn-accent);
 }
 
+.gdn-row {
+  text-decoration: none;
+  color: var(--gdn-text);
+}
+
 .gdn-row:hover {
   background: var(--gdn-panel);
 }
