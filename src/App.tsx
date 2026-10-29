@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
 import { Works } from './pages/Works';
@@ -13,24 +13,35 @@ import { Garden } from './pages/Garden';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-[var(--concrete)]">
-        <div className="brutal-grid"></div>
-        <Navigation />
-        
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/garden" element={<Garden />} />
-          <Route path="/works" element={<Works />} />
-          <Route path="/works/:id" element={<ProjectPage />} />
-          <Route path="/lab" element={<Laboratory />} />
-          <Route path="/stack" element={<Stack />} />
-          <Route path="/manifesto" element={<Manifesto />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </div>
+      <Shell />
     </Router>
   );
 }
+
+const Shell = () => {
+  const location = useLocation();
+  const isGarden = location.pathname === '/garden';
+  return (
+    <div className={isGarden ? 'min-h-screen' : 'min-h-screen bg-[var(--concrete)]'}>
+      {!isGarden && (
+        <>
+          <div className="brutal-grid"></div>
+          <Navigation />
+        </>
+      )}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/garden" element={<Garden />} />
+        <Route path="/works" element={<Works />} />
+        <Route path="/works/:id" element={<ProjectPage />} />
+        <Route path="/lab" element={<Laboratory />} />
+        <Route path="/stack" element={<Stack />} />
+        <Route path="/manifesto" element={<Manifesto />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </div>
+  );
+};
 
 // Wrapper component to handle project ID from URL
 const ProjectPage = () => {
