@@ -7,7 +7,9 @@
     "build": "node generate.mjs",
     "new:link": "node scripts/new-content.mjs link",
     "publish": "node scripts/publish.mjs",
-    "deploy": "node generate.mjs && node scripts/publish.mjs"
+    "deploy": "node generate.mjs && node scripts/publish.mjs",
+    "test": "node --test",
+    "verify": "node --check generate.mjs && node --test"
   },
   "dependencies": {
     "handlebars": "^4.7.8",

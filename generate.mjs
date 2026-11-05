@@ -62,5 +62,6 @@ rmSync(dist, { recursive: true, force: true });
 mkdirSync(dist, { recursive: true });
 writeFileSync(join(dist, 'index.html'), tmpl({ gardenSections, starred, total }));
 writeFileSync(join(dist, 'style.css'), readFileSync(join(src, 'style.css')));
+writeFileSync(join(dist, '.nojekyll'), '');
 
 console.log(`Built 1 page — ${total} links, ${sections.length} sections -> dist/`);
