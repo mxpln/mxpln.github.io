@@ -4,15 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "node generate.mjs",
+    "build": "python build.py",
+    "test": "python -m unittest discover -s test -p 'test_*.py'",
+    "verify": "python -m py_compile build.py && python -m unittest discover -s test -p 'test_*.py'",
     "new:link": "node scripts/new-content.mjs link",
     "publish": "node scripts/publish.mjs",
-    "deploy": "node generate.mjs && node scripts/publish.mjs",
-    "test": "node --test",
-    "verify": "node --check generate.mjs && node --test"
-  },
-  "dependencies": {
-    "handlebars": "^4.7.8",
-    "marked": "^18.0.0"
+    "deploy": "python build.py && node scripts/publish.mjs"
   }
 }

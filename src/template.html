@@ -23,36 +23,10 @@
       <kbd class="kbd">^K</kbd>
     </div>
 
-    {{#if starred}}
-    <section class="section-block" data-gdn-section aria-label="Starred">
-      <h2 class="section-label"><span class="accent">&#9733;</span> <span class="dim">most-used/</span></h2>
-      {{#each starred}}
-      <div class="row" data-gdn-row data-search="{{lowercase (concat title ' ' description ' ' url ' ' (join tags ' '))}}">
-        <span class="star" aria-hidden="true">&#9733;</span>
-        <a href="{{url}}" target="_blank" rel="noopener noreferrer" class="title">{{title}}</a>
-        <span class="dim dash">—</span>
-        <span class="desc">{{description}}</span>
-      </div>
-      {{/each}}
-    </section>
-    {{/if}}
+    {{STARRED_SECTION}}
+{{SECTIONS}}
 
-    {{#each gardenSections}}
-    <section class="section-block" data-gdn-section aria-label="{{file}}">
-      <h2 class="section-label"><span class="path">{{file}}/</span> <span class="count dim">{{links.length}}</span></h2>
-      {{#each links}}
-      <div class="row" data-gdn-row data-search="{{lowercase (concat title ' ' description ' ' url ' ' (join tags ' '))}}">
-        <span class="idx dim">{{padded @index 2}}</span>
-        <span class="star" aria-hidden="true">{{#if starred}}&#9733;{{/if}}</span>
-        <a href="{{url}}" target="_blank" rel="noopener noreferrer" class="title">{{title}}</a>
-        <span class="dim dash">—</span>
-        <span class="desc">{{description}}</span>
-      </div>
-      {{/each}}
-    </section>
-    {{/each}}
-
-    <p class="prompt mt-6"><span class="user">mxpln@web</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="dim"><span data-gdn-count>{{total}}</span>/{{total}}</span><span class="cursor">&#9608;</span></p>
+    <p class="prompt mt-6"><span class="user">mxpln@web</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="dim"><span data-gdn-count>{{TOTAL}}</span>/{{TOTAL}}</span><span class="cursor">&#9608;</span></p>
   </main>
   <footer class="term-footer">
     <span class="dim">&#9679; bash</span>
