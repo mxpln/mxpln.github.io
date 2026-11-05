@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="mxpln — bookmarks" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230a0a0f'/%3E%3Ctext x='1' y='12' font-size='10' fill='%23a78bfa' font-family='monospace'%3E%3E%3C/text%3E%3C/svg%3E" />
+<title>mxpln@web:~$</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="term">
+  <header class="term-titlebar">
+    <span class="term-dot close"></span><span class="term-dot min"></span><span class="term-dot max"></span>
+    <span class="term-title">mxpln@web:~</span>
+  </header>
+  <main class="term-body">
+    <p class="prompt"><span class="user">mxpln@web</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="cmd">ls bookmarks/</span></p>
+
+    <div class="search">
+      <span class="cmd">grep -i</span>
+      <input id="gdn-search" type="search" placeholder="" aria-label="Filter links" spellcheck="false" autocomplete="off" />
+      <kbd class="kbd">^K</kbd>
+    </div>
+
+    {{#if starred}}
+    <section class="section-block" data-gdn-section aria-label="Starred">
+      <h2 class="section-label"><span class="accent">&#9733;</span> <span class="dim">most-used/</span></h2>
+      {{#each starred}}
+      <div class="row" data-gdn-row data-search="{{lowercase (concat title ' ' description ' ' url ' ' (join tags ' '))}}">
+        <span class="star" aria-hidden="true">&#9733;</span>
+        <a href="{{url}}" target="_blank" rel="noopener noreferrer" class="title">{{title}}</a>
+        <span class="dim dash">—</span>
+        <span class="desc">{{description}}</span>
+      </div>
+      {{/each}}
+    </section>
+    {{/if}}
+
+    {{#each gardenSections}}
+    <section class="section-block" data-gdn-section aria-label="{{file}}">
+      <h2 class="section-label"><span class="path">{{file}}/</span> <span class="count dim">{{links.length}}</span></h2>
+      {{#each links}}
+      <div class="row" data-gdn-row data-search="{{lowercase (concat title ' ' description ' ' url ' ' (join tags ' '))}}">
+        <span class="idx dim">{{padded @index 2}}</span>
+        <span class="star" aria-hidden="true">{{#if starred}}&#9733;{{/if}}</span>
+        <a href="{{url}}" target="_blank" rel="noopener noreferrer" class="title">{{title}}</a>
+        <span class="dim dash">—</span>
+        <span class="desc">{{description}}</span>
+      </div>
+      {{/each}}
+    </section>
+    {{/each}}
+
+    <p class="prompt mt-6"><span class="user">mxpln@web</span><span class="dim">:</span><span class="path">~</span><span class="dim">$</span> <span class="dim"><span data-gdn-count>{{total}}</span>/{{total}}</span><span class="cursor">&#9608;</span></p>
+  </main>
+  <footer class="term-footer">
+    <span class="dim">&#9679; bash</span>
+    <span class="dim">5.2.15</span>
+    <span class="right dim">UTF-8</span>
+    <span class="dim">ln</span>
+  </footer>
+</div>
+<script>
+const input=document.getElementById('gdn-search');
+const rows=[...document.querySelectorAll('[data-gdn-row]')];
+const secs=[...document.querySelectorAll('[data-gdn-section]')];
+const cnt=document.querySelector('[data-gdn-count]');
+function apply(){const q=(input?.value??'').trim().toLowerCase();let s=0;
+for(const r of rows){const h=!q||(r.dataset.search??'').includes(q);r.style.display=h?'':'none';if(h)s++;}
+for(const sec of secs){const any=[...sec.querySelectorAll('[data-gdn-row]')].some(r=>r.style.display!=='none');sec.style.display=any?'':'none';}
+if(cnt)cnt.textContent=String(s);}
+input?.addEventListener('input',apply);
+window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();input?.focus();}});
+</script>
+</body>
+</html>
