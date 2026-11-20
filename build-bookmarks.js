@@ -187,3 +187,4 @@ fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, html);
 const n = cats.reduce((s, c) => s + c.items.length, 0);
 console.log(`✓ ${path.relative(process.cwd(), outFile)} — ${cats.length} categories, ${n} bookmarks, ${(html.length / 1024).toFixed(1)} kB`);
+
