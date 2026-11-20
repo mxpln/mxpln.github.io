@@ -2,7 +2,7 @@
 // content/bookmarks/*.md  →  one self-contained static page (dist/bookmarks.html).
 // No dependencies. Needs Node 14+.
 //
-// Markdown format (one file per category, files are sorted by name):
+// Markdown format (one file per category, ordered by the number the file name starts with: 1-, 2-, 10-…):
 //   # 🛠️ dev-tools                      ← category title (first "# " line; falls back to the file name)
 //   - [Name](https://url) — short note  ← one bookmark per line; the note is optional
 //
@@ -47,7 +47,12 @@ function parse(md, file) {
 
 // ---------- read content ----------
 if (!fs.existsSync(dir)) { console.error(`Folder not found: ${dir}`); process.exit(1); }
-const files = fs.readdirSync(dir).filter(f => f.endsWith('.md')).sort();
+const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'))
+  .sort((a, b) => {                       // the leading number is the order: 2- before 10-; no number = last
+    const na = parseInt(a, 10), nb = parseInt(b, 10);
+    if (isNaN(na) !== isNaN(nb)) return isNaN(na) ? 1 : -1;
+    return (na - nb) || a.localeCompare(b);
+  });
 if (!files.length) { console.error(`No .md files in ${dir}`); process.exit(1); }
 const cats = files.map(f => parse(fs.readFileSync(path.join(dir, f), 'utf8'), f)).filter(c => c.items.length);
 

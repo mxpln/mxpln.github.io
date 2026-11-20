@@ -4,7 +4,7 @@ Une page de liens, écrite en Markdown et générée en un seul fichier HTML sta
 
 ## Écrire
 
-Un fichier `.md` par catégorie dans `content/bookmarks/` (triés par nom de fichier) :
+Un fichier `.md` par catégorie dans `content/bookmarks/` (l'ordre d'affichage est le numéro au début du nom : `1-`, `2-`, `10-`… ; sans numéro, la catégorie passe en dernier) :
 
 ```md
 # 🛠️ dev-tools
