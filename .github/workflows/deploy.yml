@@ -1,8 +1,12 @@
-name: Deploy to Pages
+name: Deploy site
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'content/**'
+      - 'build-bookmarks.js'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -15,19 +19,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # dist/ is compiled locally (node generate.mjs) and committed to the repo;
-      # this workflow just deploys the committed artifact.
-      - uses: actions/configure-pages@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build the page from the .md files
+        run: node build-bookmarks.js --out _site/index.html
+      - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v4
