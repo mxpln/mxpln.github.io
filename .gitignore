@@ -1,2 +1,5 @@
 _site/
 dist/
+plan/
+test/
+add-bookmark.js

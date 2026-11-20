@@ -1,27 +1,37 @@
 # Bookmarks
 
-Une page de liens, écrite en Markdown et générée en un seul fichier HTML statique.
+A page of links, written in Markdown and generated as a single static HTML file.
 
-## Écrire
+## Writing
 
-Un fichier `.md` par catégorie dans `content/bookmarks/` (l'ordre d'affichage est le numéro au début du nom : `1-`, `2-`, `10-`… ; sans numéro, la catégorie passe en dernier) :
+One `.md` file per category in `content/bookmarks/` (display order is determined by the number at the beginning of the filename: `1-`, `2-`, `10-`…; categories without a number appear last):
 
 ```md
 # 🛠️ dev-tools
 
-- [MDN Web Docs](https://developer.mozilla.org) — La référence du web.
+- [MDN Web Docs](https://developer.mozilla.org) — The web reference.
 ```
 
-## Générer en local (optionnel)
+## Generate locally (optional)
 
 ```sh
-node build-bookmarks.js          # écrit dist/bookmarks.html
+node build-bookmarks.js          # writes dist/bookmarks.html
 ```
 
-Sans dépendance (Node 14+). Options : `--handle mxpln`, `--accent "#a98bff"`, `--glow bright|soft|off`, `--density comfortable|compact`, `--in`, `--out`.
+No dependencies (Node 14+). Options: `--handle mxpln`, `--accent "#a98bff"`, `--glow bright|soft|off`, `--density comfortable|compact`, `--in`, `--out`.
 
-## Publier (GitHub Pages)
+## Publish (GitHub Pages)
 
-Modifie un `.md` puis `git push` sur `main` : l'Action `.github/workflows/deploy.yml` génère la page et la publie, rien d'autre à faire.
+Edit a `.md` file and then `git push` to `main`: the `.github/workflows/deploy.yml` Action generates and publishes the page—nothing else to do.
 
-Réglage unique : dans le repo, **Settings → Pages → Source : GitHub Actions**.
+One-time setup: in the repository, **Settings → Pages → Source: GitHub Actions**.
+
+## Manage bookmarks
+
+Run the interactive manager from the repository root:
+
+```sh
+node add-bookmark.js
+```
+
+The menu lets you add, edit, or delete links, as well as add, rename, or delete categories. Changes require confirmation with `y` or `yes`.
